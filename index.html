@@ -14,12 +14,18 @@
         <div id="bar"></div>
     </header>
     <main>
+
         <article id="log">
           <h1>Medication Log</h1>
           <button onclick="viewInputPage()" class="button">Medication Input</button>
           <br /><br />
           <button onclick="viewAboutPage()" class="button">About Page</button>
+
+          <script>
+            returnDrugNames();
+          </script>
         </article>
+
         <article id="input">
           <h1>Medication Input</h1>
           <button onclick="viewLogPage()" class="button">Medication Log</button>
@@ -32,7 +38,7 @@
           <br /><br />
           <button onclick="viewInputPage()" class="button">Medication Input</button>
         </article>
-        <script src="script.js"></script>
+        <script src="js/script.js"></script>
     </main>
 </body>
 
