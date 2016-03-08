@@ -8,26 +8,32 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body>
-  <article id="log">
-    <h1>Medication Log</h1>
-    <button onclick="viewInputPage()">Medication Input</button>
-    <br>
-    <button onclick="viewAboutPage()">About Page</button>
-  </article>
-  <article id="input">
-    <h1>Medication Input</h1>
-    <button onclick="viewLogPage()">Medication Log</button>
-    <br>
-    <button onclick="viewAboutPage()">About Page</button>
-  </article>
-  <article id="about">
-    <h1>About</h1>
-    <button onclick="viewLogPage()">Medication Log</button>
-    <br>
-    <button onclick="viewInputPage()">Medication Input</button>
-  </article>
-  <script src="js/script.js"></script>
+<body> 
+    <header>
+        <img src="http://cit261.sarahbroat.com/myexamples/logotext.png" id="logo" alt="myMedTracker logo" /> 
+        <div id="bar"></div>
+    </header>
+    <main>
+        <article id="log">
+          <h1>Medication Log</h1>
+          <button onclick="viewInputPage()" class="button">Medication Input</button>
+          <br /><br />
+          <button onclick="viewAboutPage()" class="button">About Page</button>
+        </article>
+        <article id="input">
+          <h1>Medication Input</h1>
+          <button onclick="viewLogPage()" class="button">Medication Log</button>
+          <br /><br />
+          <button onclick="viewAboutPage()" class="button">About Page</button>
+        </article>
+        <article id="about">
+          <h1>About</h1>
+          <button onclick="viewLogPage()" class="button">Medication Log</button>
+          <br /><br />
+          <button onclick="viewInputPage()" class="button">Medication Input</button>
+        </article>
+        <script src="script.js"></script>
+    </main>
 </body>
 
 </html>
