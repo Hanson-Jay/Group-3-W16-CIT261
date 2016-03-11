@@ -22,26 +22,25 @@ function viewAboutPage() {
 }
 function returnDrugNames(){
 
-    var xmlhttp = new XMLHttpRequest();
-    var url = "https://dailymed.nlm.nih.gov/dailymed/services/drugnames.json";
+    var xmlObj = new XMLHttpRequest();
 
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-            var myArr = JSON.parse(xmlhttp.responseText);
-            myFunction(myArr);
-        }
-    };
-    xmlhttp.open("GET", url, true);
-    xmlhttp.send();
+    var searchTerm = ;
+    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=" + searchTerm + "&name_type=both";
 
-    function myFunction(arr) {
-        var out = "";
-        var i;
-        for(i = 0; i < arr.length; i++) {
-            out += 'page';
+    xmlObj.open("GET", url, true);
+
+
+    xmlObj.onreadystatechange = function(){
+
+        if(xmlObj.readyState == 4 && xmlObj.status == 200){
+
+            document.getElementById("response").innerHTML = xmlObj.responseText;
         }
-        document.getElementById("log").innerHTML = out;
     }
+
+    xmlObj.send();
+
+
 
 
 }
