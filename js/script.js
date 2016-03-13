@@ -20,6 +20,11 @@ function viewAboutPage() {
   aboutPage.style.left = 0;
   currentPage = aboutPage;
 }
+//function resetForm(){
+//    document.getElementById("mg").reset();
+//    document.getElementById("med").reset();
+//
+//}
 function returnDrugNames(){
 
     var xmlObj = new XMLHttpRequest();
