@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow-x: hidden;
+    background-color: #b7cfec;
+}
+
+body {
+    padding: 0 8px;
+}
+
+/************************************************************
+  HEADER/BANNER
+************************************************************/
+
+header {
+    position: relative;
+    width: 100%;
+}
+
+#logo {
+    position: relative;
+    max-width: 300px;
+    z-index: 1;
+}
+
+#bar {
+    position: absolute;
+    top: 75px;
+    width: 100%;
+    height: 50px;
+    background-color: #76a1d6;
+}
+
+/************************************************************
+  NAVIGATION
+************************************************************/
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav button {
+    width: 33%;
+    padding: 10px 0;
+    background-color: #76a1d6;
+    /* Medium Blue */
+    border: 2px solid #76a1d6;
+    /* Medium Blue */
+    color: #1d305f;
+    /* Dark Blue */
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.5s;
+}
+
+nav button:hover,
+nav button.selected {
+    background-color: #b7cfec; /* Light Blue */
+}
+
+/************************************************************
+  MAIN/ARTICLE FORMATTING
+************************************************************/
+
+main {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+}
+
+article {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    transition: .5s ease-out;
+}
+
+/************************************************************
+  INPUT PAGE
+************************************************************/
+
+#input {
+    background: #b7cfec;
+    left: -100%;
+}
+
+/************************************************************
+  LOG PAGE
+************************************************************/
+
+#log {
+    background: #b7cfec;
+}
+
+#container {
+    width: 75px;
+    height: 15px;
+    background: #b7cfec;
+    border: 2px solid #76a1d6;
+    position: absolute;
+    z-index: 1;
+}
+
+#slider {
+    width: 50px;
+    height: 11px;
+    border: 1px solid #76a1d6;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background: #76a1d6;
+    position: relative;
+    z-index: 2;
+}
+
+.active {
+    background: #b7cfec;
+    border: 1px solid #76a1d6;
+}
+/************************************************************
+  ABOUT PAGE
+************************************************************/
+
+#about {
+    background: #b7cfec;
+    left: 100%;
+}
+
+/************************************************************
+  GENERAL FORMATTING
+************************************************************/
+
+h1 {
+    color: #1d305f;
+}

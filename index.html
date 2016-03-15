@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyMedTracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<header>
+    <div id="bar"></div>
+    <img src="http://portfolio.sarahbroat.com/styleguide/images/logotext.png" id="logo" alt="myMedTracker logo" />
+</header>
+<nav>
+    <button onclick="viewInputPage()">Input Medication</button>
+    <button onclick="viewLogPage()" class="selected">Medication Log</button>
+    <button onclick="viewAboutPage()">About Page</button>
+</nav>
+<main>
+
+    <article id="input">
+        <h1>Medication Input</h1>
+        <h2>Daily Medications</h2>
+        <!--Med log div-->
+        <div id="2"></div>
+        <br>
+        <!--Med/Dosage input-->
+        <input type="text" id="med" placeholder="Med" />
+        <input type="text" id="mg" placeholder="*mg" />
+        <button id="save" onclick="store()">save</button>
+        <button id="clear" onClick="clearLS()">clear</button>
+        <!--<button id="reset" onclick="resetForm()">reset</button>-->
+        <br>
+        <div id="saves"></div>
+    </article>
+
+    <article id="log">
+        <h1>Medication Log</h1>
+        <!--Med log div-->
+        <div id="1"></div>
+        <br>
+        <!--Med Log input-->
+        <div id="container">
+            <div id="slider" class="active" style="left:0; top:0"></div>
+        </div>
+    </article>
+
+    <article id="about">
+        <input type="button" value="View" onclick="returnDrugNames()"/>
+
+        <div id="response"></div>
+        <h1>About</h1>
+    </article>
+
+    <script src="js/script.js"></script>
+</main>
+</body>
+
+</html>
