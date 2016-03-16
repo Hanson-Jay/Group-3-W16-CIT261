@@ -93,14 +93,12 @@ function store() {
   printTable();
 }
 
-function returnDrugNames(){
+function returnDrugNames(searchTerm){
 
     var xmlObj = new XMLHttpRequest();
+    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name="+searchTerm+"&name_type=both";
 
-    //var searchTerm = ;
-    //var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name= + "searchTerm" + &name_type=both";
-
-    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=lexapro&name_type=both";
+    //var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=lexapro&name_type=both";
 
     xmlObj.open("GET", url, true);
 
@@ -120,13 +118,28 @@ function returnDrugNames(){
 
     xmlObj.send();
 
+}
+function loadFromLs(){
+    if (typeof(Storage) !== "undefined") {
+        if (localStorage.clickcount) {
+
+            var out = "<table id=medList> <th>Medicine - Dosage</th>";
+            for (i = 0; i < localStorage.clickcount; i++) {
+                out += "<tr>" +
+                    "<td>" + localStorage.getItem(i + 1) + "</td>" +
+                    "</tr>";
+            }
+            out += "</table>";
+            document.getElementById("1").innerHTML = out;
+            document.getElementById("2").innerHTML = out;
+
+        }
+
+    } else {
+        document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
+    }
 
 }
-//function resetForm(){
-    //    document.getElementById("mg").reset();
-    //    document.getElementById("med").reset();
-    //
-    //}
 /*Medication Log Page Sliders */
 window.addEventListener('load', function(){
 
@@ -136,6 +149,7 @@ window.addEventListener('load', function(){
         dist = 0, // distance traveled by touch point
         touchobj = null // Touch object holder
 
+     loadFromLs();
     slider.addEventListener('touchstart', function(e){
         touchobj = e.changedTouches[0] // reference first touch point
         boxleft = parseInt(slider.style.left) // get left position of box
