@@ -42,7 +42,7 @@ function clearLS() {
 function store() {
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
-    <!--Med save counter, used to display in table & as medicine key in LS-->
+   //Med save counter, used to display in table & as medicine key in LS
     if (typeof(Storage) !== "undefined") {
         if (localStorage.clickcount) {
             localStorage.clickcount = Number(localStorage.clickcount) + 1;
@@ -54,24 +54,16 @@ function store() {
         document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
     }
     localStorage.setItem(localStorage.clickcount, med.value + ' - ' + mg.value);
-    var out = "<table id=medList> <th>Medicine - Dosage</th>";
-    for (i = 0; i < localStorage.clickcount; i++) {
-        out += "<tr>" +
-            "<td>" + localStorage.getItem(i + 1) + "</td>" +
-            "</tr>";
-    }
-    out += "</table>";
-    document.getElementById("1").innerHTML = out;
-    document.getElementById("2").innerHTML = out;
+    loadFromLs();
 }
-function returnDrugNames(){
+function returnDrugNames(searchTerm){
 
     var xmlObj = new XMLHttpRequest();
 
-    //var searchTerm = ;
-    //var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name= + "searchTerm" + &name_type=both";
 
-    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=lexapro&name_type=both";
+    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name="+searchTerm+"&name_type=both";
+
+    //var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=lexapro&name_type=both";
 
     xmlObj.open("GET", url, true);
 
@@ -93,11 +85,28 @@ function returnDrugNames(){
 
 
 }
-//function resetForm(){
-    //    document.getElementById("mg").reset();
-    //    document.getElementById("med").reset();
-    //
-    //}
+function loadFromLs(){
+    if (typeof(Storage) !== "undefined") {
+        if (localStorage.clickcount) {
+
+            var out = "<table id=medList> <th>Medicine - Dosage</th>";
+            for (i = 0; i < localStorage.clickcount; i++) {
+                out += "<tr>" +
+                    "<td>" + localStorage.getItem(i + 1) + "</td>" +
+                    "</tr>";
+            }
+            out += "</table>";
+            document.getElementById("1").innerHTML = out;
+            document.getElementById("2").innerHTML = out;
+
+
+        }
+
+    } else {
+        document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
+    }
+
+}
 /*Medication Log Page Sliders */
 window.addEventListener('load', function(){
 
@@ -107,6 +116,7 @@ window.addEventListener('load', function(){
         dist = 0, // distance traveled by touch point
         touchobj = null // Touch object holder
 
+     loadFromLs();
     slider.addEventListener('touchstart', function(e){
         touchobj = e.changedTouches[0] // reference first touch point
         boxleft = parseInt(slider.style.left) // get left position of box
