@@ -104,7 +104,7 @@ article {
     background: #b7cfec;
 }
 
-#container {
+.container {
     width: 75px;
     height: 15px;
     background: #b7cfec;
@@ -113,7 +113,7 @@ article {
     z-index: 1;
 }
 
-#slider {
+.container div {
     width: 50px;
     height: 11px;
     border: 1px solid #76a1d6;

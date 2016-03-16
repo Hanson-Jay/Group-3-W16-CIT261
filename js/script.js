@@ -2,7 +2,47 @@ var logPage = document.getElementById("log"),
     inputPage = document.getElementById("input"),
     aboutPage = document.getElementById("about"),
     navButtons = document.querySelectorAll("nav button"),
-    selectedNavBtn = document.querySelector('.selected');
+    selectedNavBtn = document.querySelector('.selected'),
+    meds = [];
+
+// Checks local storage to see if anything has been saved and if it has parses it and stores it in meds. Also calls printTable.
+function init() {
+  if (typeof localStorage["meds"] != "undefined") {
+    meds = JSON.parse(localStorage["meds"]);
+    printTable();
+  }
+}
+
+// Creates a table for the input medication page as well as the log page
+function printTable() {
+  var table1,
+      table2,
+      toggle = '<div class="container"><div class="active" class="active" style="left:0; top:0"></div></div>',
+      button = '<button type="button">Delete</button>',
+      i;
+  // Build table1 for the log page with toggles
+  table1 = "<table><th>Medication</th><th>Dose</th>";
+  for (i = 0; i < meds.length; i++) {
+    table1 += "<tr><td>" + meds[i]["med"] + "</td>";
+    table1 += "<td>" + meds[i]["dose"] + "mg</td><td>";
+    table1 += "<td>" + toggle + "</td></tr>";
+  }
+  table1 += "</table>";
+  document.getElementById("1").innerHTML = table1;
+  
+  // Build table2 for the Input medication page with delete button
+  table2 = "<table><th>Medication</th><th>Dose</th>";
+  for (i = 0; i < meds.length; i++) {
+      table2 += "<tr><td>" + meds[i]["med"] + "</td>";
+      table2 += "<td>" + meds[i]["dose"] + "mg</td><td>";
+      table2 += "<td>" + button + "</td></tr>";
+    }
+    table2 += "</table>";
+    document.getElementById("2").innerHTML = table2;
+  
+    // Displays how many medications have been saved
+    document.getElementById("saves").innerHTML = meds.length + " Medication(s) saved.";
+}
 
 function viewInputPage() {
     selectedNavBtn.className = "";
@@ -38,32 +78,21 @@ function clearLS() {
     document.getElementById("2").innerHTML = "You have no Medication Listed";
     document.getElementById("saves").innerHTML = "0 Medication(s) saved.";
 }
-/* Save Medicine to Local Storage and display in single column table */
+/* Creates a medice object and stores it in the array and updates localStorage */
 function store() {
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
-    <!--Med save counter, used to display in table & as medicine key in LS-->
-    if (typeof(Storage) !== "undefined") {
-        if (localStorage.clickcount) {
-            localStorage.clickcount = Number(localStorage.clickcount) + 1;
-        } else {
-            localStorage.clickcount = 1;
-        }
-        document.getElementById("saves").innerHTML = localStorage.clickcount + " Medication(s) saved.";
-    } else {
+    var medObj = {};
+    if (typeof(Storage) == "undefined") {
         document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
     }
-    localStorage.setItem(localStorage.clickcount, med.value + ' - ' + mg.value);
-    var out = "<table id=medList> <th>Medicine - Dosage</th>";
-    for (i = 0; i < localStorage.clickcount; i++) {
-        out += "<tr>" +
-            "<td>" + localStorage.getItem(i + 1) + "</td>" +
-            "</tr>";
-    }
-    out += "</table>";
-    document.getElementById("1").innerHTML = out;
-    document.getElementById("2").innerHTML = out;
+  medObj["med"] = med.value;
+  medObj["dose"] = mg.value;
+  meds.push(medObj);
+  localStorage["meds"] = JSON.stringify(meds);
+  printTable();
 }
+
 function returnDrugNames(){
 
     var xmlObj = new XMLHttpRequest();
@@ -125,3 +154,6 @@ window.addEventListener('load', function(){
     }, false)
 
 }, false)
+
+/* Run initialization code */
+init();
