@@ -42,7 +42,7 @@ function clearLS() {
 function store() {
   var med = document.getElementById("med");
   var mg = document.getElementById("mg");
-  <!--Med save counter, used to display in table & as medicine key in LS-->
+  /* Med save counter, used to display in table & as medicine key in LS */
   if (typeof(Storage) !== "undefined") {
     if (localStorage.clickcount) {
       localStorage.clickcount = Number(localStorage.clickcount) + 1;
