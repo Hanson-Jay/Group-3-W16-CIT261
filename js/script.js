@@ -17,11 +17,11 @@ function init() {
 function printTable() {
   var table1,
       table2,
-      toggle = '<div class="container"><div class="active" class="active" style="left:0; top:0"></div></div>',
+      toggle = '<div class="container"><div class="slider" class="active" style="left:0" onClick="Animate()"></div></div>',
       button = '<button type="button">Delete</button>',
       i;
   // Build table1 for the log page with toggles
-  table1 = "<table><th>Medication</th><th>Dose</th>";
+  table1 = '<table><th class="medList">Medication</th><th class="medList">Dose</th>';
   for (i = 0; i < meds.length; i++) {
     table1 += "<tr><td>" + meds[i]["med"] + "</td>";
     table1 += "<td>" + meds[i]["dose"] + "mg</td><td>";
@@ -123,10 +123,11 @@ function loadFromLs(){
     if (typeof(Storage) !== "undefined") {
         if (localStorage.clickcount) {
 
-            var out = "<table id=medList> <th>Medicine - Dosage</th>";
+            var out = "<table id=medList> <th>Medicine - Dosage</th>" + "<th></th>";
             for (i = 0; i < localStorage.clickcount; i++) {
                 out += "<tr>" +
                     "<td>" + localStorage.getItem(i + 1) + "</td>" +
+                    "<td>" + SLIDER + "</td>" +
                     "</tr>";
             }
             out += "</table>";
@@ -134,40 +135,25 @@ function loadFromLs(){
             document.getElementById("2").innerHTML = out;
 
         }
-
     } else {
         document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
     }
 
 }
 /*Medication Log Page Sliders */
-window.addEventListener('load', function(){
 
-    var slider = document.getElementById('slider'),
-        boxleft, // left position of moving box
-        startx, // starting x coordinate of touch point
-        dist = 0, // distance traveled by touch point
-        touchobj = null // Touch object holder
+var slider = document.getElementsByClassName('slider');
 
-     loadFromLs();
-    slider.addEventListener('touchstart', function(e){
-        touchobj = e.changedTouches[0] // reference first touch point
-        boxleft = parseInt(slider.style.left) // get left position of box
-        startx = parseInt(touchobj.clientX) // get x coord of touch point
-        e.preventDefault() // prevent default click behavior
-    }, false)
+    slider.onclick = function Animate() {
+      if(this.style.left === '0') 
+      { 
+        rectangle.classList.add('active');
+      } else {
+        this.this.style.left > '0';
+        slider.classList.remove('active');    
+      }  
+}
 
-    slider.addEventListener('touchmove', function(e){
-        touchobj = e.changedTouches[0] // reference first touch point for this event
-        var dist = parseInt(touchobj.clientX) - startx // calculate dist traveled by touch point
-        // move box according to starting pos plus dist
-        // with lower limit 0 and upper limit 350 so it doesn't move outside box:
-        slider.style.left = ( (boxleft + dist > 21)? 21 : (boxleft + dist < 0)? 0 : boxleft + dist ) + 'px'
-        e.preventDefault()
-        slider.classList.add('active')
-    }, false)
-
-}, false)
 
 /* Run initialization code */
 init();
