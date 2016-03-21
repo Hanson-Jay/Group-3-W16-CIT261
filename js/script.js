@@ -98,6 +98,7 @@ function store() {
   meds.push(medObj);
   localStorage["meds"] = JSON.stringify(meds);
   printTable();
+  document.getElementById('medInput').reset();
 }
 
 function returnDrugNames(searchTerm){
