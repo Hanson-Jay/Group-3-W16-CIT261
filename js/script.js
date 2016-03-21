@@ -35,13 +35,20 @@ function printTable() {
   for (i = 0; i < meds.length; i++) {
       table2 += "<tr><td>" + meds[i]["med"] + "</td>";
       table2 += "<td>" + meds[i]["dose"] + "mg</td><td>";
-      table2 += "<td>" + button + "</td></tr>";
+      table2 += "<td onClick='deleteMed(this)'>" + button + "</td></tr>";
     }
     table2 += "</table>";
     document.getElementById("2").innerHTML = table2;
   
     // Displays how many medications have been saved
     document.getElementById("saves").innerHTML = meds.length + " Medication(s) saved.";
+}
+
+function deleteMed(obj){
+	var i = obj.parentNode.rowIndex-1;
+    meds.splice(i, 1);
+    localStorage["meds"] = JSON.stringify(meds);
+    printTable();
 }
 
 function viewInputPage() {
