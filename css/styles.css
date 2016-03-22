@@ -107,7 +107,7 @@ article {
 .container {
     width: 75px;
     height: 15px;
-    background: #b7cfec;
+    background: linear-gradient(to right, green , red);
     border: 2px solid #76a1d6;
     position: absolute;
     z-index: 1;
@@ -139,23 +139,33 @@ article {
     animation-duration: .8s;
 }
 
+.deactive {
+  animation: slideReverse .8s;
+}
+
     /* Chrome, Safari, Opera */
     @-webkit-keyframes slide {
         0%   {left:0px; top:0px;}
-/*        25%  {left:5px; top:0px;}
-        50%  {left:10px; top:0px;}
-        75%  {left:16px; top:0px;}*/
         100% {left:22px; top:0px;}
     }
 
     /* Standard syntax */
     @keyframes slide {
         0%   {left:0px; top:0px;}
-/*        25%  {left:5px; top:0px;}
-        50%  {left:10px; top:0px;}
-        75%  {left:16px; top:0px;}*/
         100% {left:22px; top:0px;}
-}
+    }
+
+    /* Chrome, Safari, Opera */
+    @-webkit-keyframes slideReverse {
+        0%   {left:22px;}
+        100% {left:0px;}
+    }
+
+    /* Standard syntax */
+    @keyframes slideReverse {
+        0%   {left:22px;}
+        100% {left:0px;}
+    }
 
 
  th .medList {

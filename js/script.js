@@ -177,7 +177,9 @@ function loadFromLs(){
 function Animate(slider) {
     if(slider.classList.contains('active')){
         slider.classList.remove('active');
+        slider.classList.add('deactive');
     } else {
+        slider.classList.remove('deactive');
         slider.classList.add('active');
     }
     /*
