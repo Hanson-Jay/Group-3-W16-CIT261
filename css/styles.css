@@ -123,33 +123,38 @@ article {
     background: #76a1d6;
     position: relative;
     z-index: 2;
+    left: 0;
+    cursor: pointer;
 }
 
 .active {
+    /*
     background: #b7cfec;
+    */
     border: 1px solid #76a1d6;
+    left:22px;
     -webkit-animation-name: example; /* Chrome, Safari, Opera */
-    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: .8s; /* Chrome, Safari, Opera */
     animation-name: slide;
-    animation-duration: 2s;
+    animation-duration: .8s;
 }
 
     /* Chrome, Safari, Opera */
     @-webkit-keyframes slide {
         0%   {left:0px; top:0px;}
-        25%  {left:6px; top:0px;}
-        50%  {left:13px; top:0px;}
-        75%  {left:190px; top:0px;}
-        100% {left:25px; top:0px;}
+/*        25%  {left:5px; top:0px;}
+        50%  {left:10px; top:0px;}
+        75%  {left:16px; top:0px;}*/
+        100% {left:22px; top:0px;}
     }
 
     /* Standard syntax */
     @keyframes slide {
         0%   {left:0px; top:0px;}
-        25%  {left:6px; top:0px;}
-        50%  {left:13px; top:0px;}
-        75%  {left:190px; top:0px;}
-        100% {left:25px; top:0px;}
+/*        25%  {left:5px; top:0px;}
+        50%  {left:10px; top:0px;}
+        75%  {left:16px; top:0px;}*/
+        100% {left:22px; top:0px;}
 }
 
 

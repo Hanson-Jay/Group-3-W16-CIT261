@@ -17,7 +17,7 @@ function init() {
 function printTable() {
   var table1,
       table2,
-      toggle = '<div class="container"><div class="slider" class="active" style="left:0" onClick="Animate()"></div></div>',
+      toggle = '<div class="container"><div class="slider" class="active" onclick="Animate(this)"></div></div>',
       button = '<button type="button">Delete</button>',
       i;
   // Build table1 for the log page with toggles
@@ -85,7 +85,7 @@ function clearLS() {
     document.getElementById("2").innerHTML = "You have no Medication Listed";
     document.getElementById("saves").innerHTML = "0 Medication(s) saved.";
 }
-/* Creates a medice object and stores it in the array and updates localStorage */
+/* Creates a medicine object and stores it in the array and updates localStorage */
 function store() {
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
@@ -101,6 +101,7 @@ function store() {
   document.getElementById('medInput').reset();
 }
 
+function searchForDrug(){}
 function returnDrugNames(searchTerm){
     var xmlObj = new XMLHttpRequest();
     var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/0d9a521b-8314-437c-8c9f-f6188f1134fe.xml";
@@ -173,16 +174,20 @@ function loadFromLs(){
 }
 /*Medication Log Page Sliders */
 
-var slider = document.getElementsByClassName('slider');
-
-    slider.onclick = function Animate() {
-      if(this.style.left === '0')
+function Animate(slider) {
+    if(slider.classList.contains('active')){
+        slider.classList.remove('active');
+    } else {
+        slider.classList.add('active');
+    }
+    /*
+      if(slider.style.left === '0px')
       {
-        rectangle.classList.add('active');
+        slider.classList.add('active');
       } else {
-        this.this.style.left > '0';
         slider.classList.remove('active');
       }
+      */
 }
 
 
