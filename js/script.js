@@ -35,7 +35,13 @@ function printTable() {
   for (i = 0; i < meds.length; i++) {
       table2 += "<tr><td>" + meds[i]["med"] + "</td>";
       table2 += "<td>" + meds[i]["dose"] + "mg</td><td>";
-      table2 += "<td onClick='deleteMed(this)'>" + button + "</td></tr>";
+      table2 += "<td onClick='deleteMed(this)'>" + button + "</td>";
+      if(meds[i]["id"] !== undefined){
+          var id = meds[i]["id"]+"";
+          table2 += '<td class="pointer" onClick="viewInfo(\'' + id + '\')"> view info</td></tr>';
+      } else {
+          table2 += "</tr>";
+      }
     }
     table2 += "</table>";
     document.getElementById("2").innerHTML = table2;
@@ -89,64 +95,77 @@ function clearLS() {
 function store() {
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
-    var medObj = {};
+
     if (typeof(Storage) == "undefined") {
         document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
     }
-  medObj["med"] = med.value;
-  medObj["dose"] = mg.value;
-  meds.push(medObj);
-  localStorage["meds"] = JSON.stringify(meds);
-  printTable();
+
+  searchForDrug(med.value, mg.value);
   document.getElementById('medInput').reset();
 }
 
-function searchForDrug(){}
-function returnDrugNames(searchTerm){
+function searchForDrug(drugName, dosage){
     var xmlObj = new XMLHttpRequest();
-    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/0d9a521b-8314-437c-8c9f-f6188f1134fe.xml";
-    //var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name=lexapro&name_type=both";
+    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name="+drugName+"&name_type=both";
     xmlObj.open("GET", url, true);
     xmlObj.onreadystatechange = function(){
         if(xmlObj.readyState == 4 && xmlObj.status == 200){
-            //document.getElementById("response").innerHTML = xmlObj.responseText;
-            // var info = JSON.parse(xmlObj.responseText);
+            var response = JSON.parse(xmlObj.response);
+            if(response.data.length > 0){
+                saveToLS(drugName, dosage, response.data[0].setid);
+            } else {
+                saveToLS(drugName, dosage, undefined);
+            }
+        }
+    }
+    xmlObj.send();
+}
+
+function saveToLS(med, mg, id){
+    var medObj = {};
+    medObj["med"] = med;
+    medObj["dose"] = mg;
+    medObj["id"] = id;
+    meds.push(medObj);
+    localStorage["meds"] = JSON.stringify(meds);
+    printTable();
+}
+
+function viewInfo(searchTerm){
+    returnDrugNames(searchTerm);
+    document.getElementById("response").innerHTML = "";
+    var loading = document.getElementById("loading-animation");
+    loading.style.display = "block";
+    viewAboutPage();
+}
+function returnDrugNames(searchTerm){
+    var xmlObj = new XMLHttpRequest();
+    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/"+searchTerm+".xml";
+    xmlObj.open("GET", url, true);
+    xmlObj.onreadystatechange = function(){
+        if(xmlObj.readyState == 4 && xmlObj.status == 200){
             var structuredBody = xmlObj.responseXML.getElementsByTagName('structuredBody');
             var components = structuredBody[0].children;
-            //var components = structuredBody[0].getElementsByTagName('components');
+            var output = "";
             for(var i = 0; i < components.length; i++){
-                //var code = components[i].getElementsByTagName("code");
                 var section = components[i].children;
                 var code = section[0].children[1];
                 var displayName = code.attributes.getNamedItem("displayName");
 
                 if(displayName.value.indexOf("INDICATIONS & USAGE SECTION") > -1){
-                    console.log("INDICATIONS & USAGE")
-                    var text = section[0].children[3];
-                    var paragraph = text.children[0];
-                    debugger;
-                    var content = paragraph.children[0];
-                    var contentText = content.textContent;
-                    console.log(contentText)
+                    var text = section[0].getElementsByTagName("text")[0];
+                    output += "<h2>Usage</h2>";
+                    output += new XMLSerializer().serializeToString(text);
                 }
                 if(displayName.value.indexOf("DOSAGE & ADMINISTRATION SECTION") > -1){
-                    console.log("DOSAGE & ADMINISTRATION")
-                    var text = section[0].children[3];
-                    var paragraph = text.children[0];
-                    debugger;
-                    var content = paragraph.textContent;
-                    console.log(content)
+                    var text = section[0].getElementsByTagName("text")[0];
+                    output += "<h2>Dosage & Administration</h2>";
+                    output += new XMLSerializer().serializeToString(text);
                 }
-
-                /*if(components[i].getElementsByTagName('structuredBody').length > 0){
-                 console.log(components[i].getElementsByTagName('structuredBody'))
-                 var structuredBody = components[i].getElementsByTagName('structuredBody');
-                 //console.log(structuredBody.getElementsByTagName('component'))
-
-                 console.log(components[i].nodeName + ": " + components[i].childNodes[0].nodeValue);
-                 }*/
             }
-            //var data = info.data;
+            document.getElementById("response").innerHTML = output;
+            var loading = document.getElementById("loading-animation");
+            loading.style.display = "none";
         }
     }
     xmlObj.send();

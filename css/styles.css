@@ -177,3 +177,12 @@ article {
 h1 {
     color: #1d305f;
 }
+
+.pointer {
+    cursor: pointer;
+}
+
+#loading-animation {
+    display: none;
+    position: absolute;
+}
