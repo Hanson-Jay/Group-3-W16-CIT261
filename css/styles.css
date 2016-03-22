@@ -104,7 +104,7 @@ article {
     background: #b7cfec;
 }
 
-#container {
+.container {
     width: 75px;
     height: 15px;
     background: #b7cfec;
@@ -113,7 +113,7 @@ article {
     z-index: 1;
 }
 
-#slider {
+.slider {
     width: 50px;
     height: 11px;
     border: 1px solid #76a1d6;
@@ -128,6 +128,33 @@ article {
 .active {
     background: #b7cfec;
     border: 1px solid #76a1d6;
+    -webkit-animation-name: example; /* Chrome, Safari, Opera */
+    -webkit-animation-duration: 4s; /* Chrome, Safari, Opera */
+    animation-name: slide;
+    animation-duration: 2s;
+}
+
+    /* Chrome, Safari, Opera */
+    @-webkit-keyframes slide {
+        0%   {left:0px; top:0px;}
+        25%  {left:6px; top:0px;}
+        50%  {left:13px; top:0px;}
+        75%  {left:190px; top:0px;}
+        100% {left:25px; top:0px;}
+    }
+
+    /* Standard syntax */
+    @keyframes slide {
+        0%   {left:0px; top:0px;}
+        25%  {left:6px; top:0px;}
+        50%  {left:13px; top:0px;}
+        75%  {left:190px; top:0px;}
+        100% {left:25px; top:0px;}
+}
+
+
+ th .medList {
+    color: #1d305f;
 }
 /************************************************************
   ABOUT PAGE
