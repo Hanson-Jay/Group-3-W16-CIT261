@@ -24,8 +24,14 @@ function printTable() {
   table1 = '<table><th class="medList">Medication</th><th class="medList">Dose</th>';
   for (i = 0; i < meds.length; i++) {
     table1 += "<tr><td>" + meds[i]["med"] + "</td>";
-    table1 += "<td>" + meds[i]["dose"] + "mg</td><td>";
-    table1 += "<td>" + toggle + "</td></tr>";
+    table1 += "<td>" + meds[i]["dose"] + "mg</td>";
+    table1 += "<td class='padding'>" + toggle + "</td>";
+    if(meds[i]["id"] !== undefined){
+          var id = meds[i]["id"]+"";
+          table1 += '<td class="pointer" onClick="viewInfo(\'' + id + '\')"> <div class="medbtns">i</div></td></tr>';
+      } else {
+          table1 += "</tr>";
+      }
   }
   table1 += "</table>";
   document.getElementById("1").innerHTML = table1;
@@ -34,14 +40,8 @@ function printTable() {
   table2 = "<table><th>Medication</th><th>Dose</th>";
   for (i = 0; i < meds.length; i++) {
       table2 += "<tr><td>" + meds[i]["med"] + "</td>";
-      table2 += "<td>" + meds[i]["dose"] + "mg</td><td>";
-      table2 += "<td onClick='deleteMed(this)'>" + button + "</td>";
-      if(meds[i]["id"] !== undefined){
-          var id = meds[i]["id"]+"";
-          table2 += '<td class="pointer" onClick="viewInfo(\'' + id + '\')"> view info</td></tr>';
-      } else {
-          table2 += "</tr>";
-      }
+      table2 += "<td>" + meds[i]["dose"] + "mg</td>";
+      table2 += "<td class='pointer' onClick='deleteMed(this)'><div class='medbtns'>x</div></td></tr>";
     }
     table2 += "</table>";
     document.getElementById("2").innerHTML = table2;
