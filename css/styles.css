@@ -15,6 +15,10 @@ body {
     padding: 0 8px;
 }
 
+button {
+  cursor: pointer;
+}
+
 /************************************************************
   HEADER/BANNER
 ************************************************************/
@@ -180,6 +184,12 @@ article {
     left: 100%;
 }
 
+#loading-animation {
+    display: none;
+    position: absolute;
+    top: 45px; 
+}
+
 /************************************************************
   GENERAL FORMATTING
 ************************************************************/
@@ -190,11 +200,6 @@ h1 {
 
 .pointer {
     cursor: pointer;
-}
-
-#loading-animation {
-    display: none;
-    position: absolute;
 }
 
 .medbtns {

@@ -11,6 +11,7 @@ function init() {
     meds = JSON.parse(localStorage["meds"]);
     printTable();
   }
+  document.getElementById('searchBar').addEventListener("keypress", searchDrug);
 }
 
 // Creates a table for the input medication page as well as the log page
@@ -151,7 +152,7 @@ function returnDrugNames(searchTerm){
                 var section = components[i].children;
                 var code = section[0].children[1];
                 var displayName = code.attributes.getNamedItem("displayName");
-
+                
                 if(displayName.value.indexOf("INDICATIONS & USAGE SECTION") > -1){
                     var text = section[0].getElementsByTagName("text")[0];
                     output += "<h2>Usage</h2>";
@@ -211,6 +212,28 @@ function Animate(slider) {
       */
 }
 
+/* Custom drug search */
+function searchDrug(e){
+  if (e.type === "keypress" && e.keyCode != 13) {
+    return;
+  }
+    var drugName = document.getElementById("searchBar").value;
+    var xmlObj = new XMLHttpRequest();
+    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name="+drugName+"&name_type=both";
+    document.getElementById("response").innerHTML = "";
+    xmlObj.open("GET", url, true);
+    xmlObj.onreadystatechange = function(){
+        if(xmlObj.readyState == 4 && xmlObj.status == 200){
+            var response = JSON.parse(xmlObj.response);
+            if(response.data.length > 0){
+                viewInfo(response.data[0].setid);
+            } else {
+              document.getElementById("response").innerHTML = "No results found.";
+            }
+        }
+    }
+    xmlObj.send();
+}
 
 /* Run initialization code */
 init();
