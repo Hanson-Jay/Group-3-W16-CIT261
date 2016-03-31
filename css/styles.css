@@ -8,11 +8,14 @@ body {
     height: 100%;
     margin: 0;
     overflow-x: hidden;
+    color: #1d305f;
     background-color: #b7cfec;
 }
 
 body {
+    margin: 0 auto;
     padding: 0 8px;
+    max-width: 1000px;
 }
 
 button {
@@ -191,7 +194,37 @@ article {
     /*top: 45px; */
 /*}*/
 
-#search-button {
+
+
+/************************************************************
+  GENERAL FORMATTING
+************************************************************/
+
+h1 {
+    color: #1d305f;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.medbtns {
+    border-radius: 20px;
+    border: 3px solid #76a1d6;
+    background: #76a1d6;
+    width: 25px;
+    color: #1d305f;
+    text-align: center;
+    font-weight: bolder;
+    font-family: sans-serif;
+    margin-left: 25px;
+}
+
+.padding {
+    padding-right: 105px;
+}
+
+.contentButton {
     height: 22px;
     vertical-align: top;
     background-color: #76a1d6;
@@ -208,26 +241,11 @@ article {
     transition-duration: 0.5s;
 }
 
-#searchButton:hover {
+.contentButton:hover {
     background-color: #b7cfec; /* Light Blue */
 }
 
-/************************************************************
-  GENERAL FORMATTING
-************************************************************/
 
-h1 {
-    color: #1d305f;
-}
-
-.pointer {
-    cursor: pointer;
-}
-
-/*#loading-animation {*/
-    /*display: none;*/
-    /*position: absolute;*/
-/*}*/
 #loading-animation {
     width: 40px;
     height: 40px;
@@ -262,13 +280,5 @@ h1 {
           transform: scale(1.0);
           opacity: 0;
       }
-.medbtns {
-    border-radius: 20px;
-    border: 3px solid #D3D3D3;
-    background:#D3D3D3;
-    width: 25px;
-    text-align: center;
-    font-weight: bolder;
-    font-family: sans-serif;
-}
+
 

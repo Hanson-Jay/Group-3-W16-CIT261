@@ -27,8 +27,9 @@
         <form id="medInput">
         <input type="text" id="med" placeholder="Med" />
         <input type="text" id="mg" placeholder="*mg" />
-        <button type="button" id="save" onclick="store()">save</button>
-        <button id="clear" onClick="clearLS()">clear</button>
+        <button type="button" id="save" onclick="store()" class="contentButton">save</button>
+        <button id="clear" onClick="clearLS()" class="contentButton">clear</button>
+        <button type="reset" id="resetBtn" class="contentButton">reset</button>
         <br></form>
         <div id="saves"></div>
         <!--Med log div-->
@@ -47,8 +48,8 @@
 
     <article id="about">
         <input id="searchBar" type="text" placeholder="Enter a medication">
-        <button type="button" onclick="searchDrug()" id="searchButton">Search</button>
-        <h1>About <span id="about-medicine-name"> </span></h1>
+        <button type="button" onclick="searchDrug()" class="contentButton">Search</button>
+        <h1>About <span id="about-medicine-name"></span></h1>
         <div id="response"></div>
       <div id="xml"></div>
     </article>

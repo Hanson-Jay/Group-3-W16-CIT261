@@ -7,8 +7,17 @@ var logPage = document.getElementById("log"),
 
 // Checks local storage to see if anything has been saved and if it has parses it and stores it in meds. Also calls printTable.
 function init() {
+  // Pull meds from localStorage if it exists
   if (typeof localStorage["meds"] != "undefined") {
     meds = JSON.parse(localStorage["meds"]);
+    // Checks if it is a new day to know if toggles should be reset
+    if (new Date().getDate() != parseInt(localStorage["lastLogin"])) {
+      for (var i = 0; i < meds.length; i++) {
+        meds[i]["active"] = false;
+      }
+    }
+    // Update last login
+    localStorage["lastLogin"] = new Date().getDate();
     printTable();
   }
   document.getElementById('searchBar').addEventListener("keypress", searchDrug);
@@ -26,7 +35,11 @@ function printTable() {
   for (i = 0; i < meds.length; i++) {
     table1 += "<tr><td>" + meds[i]["med"] + "</td>";
     table1 += "<td>" + meds[i]["dose"] + "mg</td>";
-    table1 += "<td class='padding'>" + toggle + "</td>";
+    table1 += "<td class='padding'>" + '<div class="container"><div class="slider';
+    if (meds[i]["active"]) {
+      table1 += ' active';
+    }
+    table1 += '" class="active" onclick="Animate(this)"></div></div>' + "</td>";
     if(meds[i]["id"] !== undefined){
           var id = meds[i]["id"]+"";
           var med = meds[i]["med"]+"";
@@ -45,7 +58,6 @@ function printTable() {
       table2 += "<td>" + meds[i]["dose"] + "mg</td>";
       table2 += "<td class='pointer' onClick='deleteMed(this)'><div class='medbtns'>x</div></td></tr>";
     }
-
     table2 += "</table>";
     document.getElementById("2").innerHTML = table2;
 
@@ -96,7 +108,6 @@ function clearLS() {
 }
 /* Creates a medicine object and stores it in the array and updates localStorage */
 function store() {
-    //var loadIt = "";
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
 
@@ -111,10 +122,7 @@ function store() {
     var loading = document.getElementById("loading-animation");
     loading.style.display = "block";
   document.getElementById('medInput').reset();
-
-
 }
-
 
 function searchForDrug(drugName, dosage){
     var xmlObj = new XMLHttpRequest();
@@ -141,6 +149,7 @@ function saveToLS(med, mg, id){
     medObj["med"] = med;
     medObj["dose"] = mg;
     medObj["id"] = id;
+    medObj["active"] = false;
     meds.push(medObj);
     localStorage["meds"] = JSON.stringify(meds);
     printTable();
@@ -174,8 +183,7 @@ function returnDrugNames(searchTerm){
                 var section = components[i].children;
                 var code = section[0].children[1];
                 var displayName = code.attributes.getNamedItem("displayName");
-
-
+                
                 if(displayName.value.indexOf("INDICATIONS & USAGE SECTION") > -1){
                     var text = section[0].getElementsByTagName("text")[0];
                     output += "<h2>Usage</h2>";
@@ -187,7 +195,6 @@ function returnDrugNames(searchTerm){
                     output += new XMLSerializer().serializeToString(text);
                 }
             }
-            //output loading animation
             document.getElementById("response").innerHTML = output;
             var loading = document.getElementById("loading-animation");
             loading.style.display = "none";
@@ -219,14 +226,18 @@ function loadFromLs(){
 /*Medication Log Page Sliders */
 
 function Animate(slider) {
+    var index = slider.parentElement.parentElement.parentElement.rowIndex-1;
     if(slider.classList.contains('active')){
         slider.classList.remove('active');
         slider.classList.add('deactive');
+        meds[index]["active"] = false;
     } else {
         slider.classList.remove('deactive');
         slider.classList.add('active');
+        meds[index]["active"] = true;
     }
-
+    // Store toggle state
+    localStorage["meds"] = JSON.stringify(meds);
 }
 
 /* Custom drug search */
