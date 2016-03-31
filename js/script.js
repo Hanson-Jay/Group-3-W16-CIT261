@@ -7,8 +7,17 @@ var logPage = document.getElementById("log"),
 
 // Checks local storage to see if anything has been saved and if it has parses it and stores it in meds. Also calls printTable.
 function init() {
+  // Pull meds from localStorage if it exists
   if (typeof localStorage["meds"] != "undefined") {
     meds = JSON.parse(localStorage["meds"]);
+    // Checks if it is a new day to know if toggles should be reset
+    if (new Date().getDate() != parseInt(localStorage["lastLogin"])) {
+      for (var i = 0; i < meds.length; i++) {
+        meds[i]["active"] = false;
+      }
+    }
+    // Update last login
+    localStorage["lastLogin"] = new Date().getDate();
     printTable();
   }
   document.getElementById('searchBar').addEventListener("keypress", searchDrug);
@@ -26,7 +35,11 @@ function printTable() {
   for (i = 0; i < meds.length; i++) {
     table1 += "<tr><td>" + meds[i]["med"] + "</td>";
     table1 += "<td>" + meds[i]["dose"] + "mg</td>";
-    table1 += "<td class='padding'>" + toggle + "</td>";
+    table1 += "<td class='padding'>" + '<div class="container"><div class="slider';
+    if (meds[i]["active"]) {
+      table1 += ' active';
+    }
+    table1 += '" class="active" onclick="Animate(this)"></div></div>' + "</td>";
     if(meds[i]["id"] !== undefined){
           var id = meds[i]["id"]+"";
           table1 += '<td class="pointer" onClick="viewInfo(\'' + id + '\')"> <div class="medbtns">i</div></td></tr>';
@@ -127,6 +140,7 @@ function saveToLS(med, mg, id){
     medObj["med"] = med;
     medObj["dose"] = mg;
     medObj["id"] = id;
+    medObj["active"] = false;
     meds.push(medObj);
     localStorage["meds"] = JSON.stringify(meds);
     printTable();
@@ -193,23 +207,19 @@ function loadFromLs(){
 
 }
 /*Medication Log Page Sliders */
-
 function Animate(slider) {
+    var index = slider.parentElement.parentElement.parentElement.rowIndex-1;
     if(slider.classList.contains('active')){
         slider.classList.remove('active');
         slider.classList.add('deactive');
+        meds[index]["active"] = false;
     } else {
         slider.classList.remove('deactive');
         slider.classList.add('active');
+        meds[index]["active"] = true;
     }
-    /*
-      if(slider.style.left === '0px')
-      {
-        slider.classList.add('active');
-      } else {
-        slider.classList.remove('active');
-      }
-      */
+    // Store toggle state
+    localStorage["meds"] = JSON.stringify(meds);
 }
 
 /* Custom drug search */
