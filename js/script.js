@@ -29,7 +29,8 @@ function printTable() {
     table1 += "<td class='padding'>" + toggle + "</td>";
     if(meds[i]["id"] !== undefined){
           var id = meds[i]["id"]+"";
-          table1 += '<td class="pointer" onClick="viewInfo(\'' + id + '\')"> <div class="medbtns">i</div></td></tr>';
+          var med = meds[i]["med"]+"";
+          table1 += '<td class="pointer" onClick="viewInfo(\'' + id + '\',  \'' + med + '\')"> <div class="medbtns">i</div></td></tr>';
       } else {
           table1 += "</tr>";
       }
@@ -44,7 +45,7 @@ function printTable() {
       table2 += "<td>" + meds[i]["dose"] + "mg</td>";
       table2 += "<td class='pointer' onClick='deleteMed(this)'><div class='medbtns'>x</div></td></tr>";
     }
-//, ' + med + '
+
     table2 += "</table>";
     document.getElementById("2").innerHTML = table2;
 
@@ -95,7 +96,7 @@ function clearLS() {
 }
 /* Creates a medicine object and stores it in the array and updates localStorage */
 function store() {
-    var loadIt = "";
+    //var loadIt = "";
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
 
@@ -106,11 +107,14 @@ function store() {
     var loading = document.getElementById("loading-animation");
     loading.style.display = "none";
   searchForDrug(med.value, mg.value);
-    document.getElementById("inputPage").innerHTML = loadIt;
+    document.getElementById("inputPage").innerHTML = "";
     var loading = document.getElementById("loading-animation");
     loading.style.display = "block";
   document.getElementById('medInput').reset();
+
+
 }
+
 
 function searchForDrug(drugName, dosage){
     var xmlObj = new XMLHttpRequest();
@@ -124,6 +128,9 @@ function searchForDrug(drugName, dosage){
             } else {
                 saveToLS(drugName, dosage, undefined);
             }
+            document.getElementById("inputPage").innerHTML = "";
+            var loading = document.getElementById("loading-animation");
+            loading.style.display = "none";
         }
     }
     xmlObj.send();
@@ -139,7 +146,15 @@ function saveToLS(med, mg, id){
     printTable();
 }
 
-function viewInfo(searchTerm){
+function viewInfo(searchTerm, id, med){
+    returnDrugNames(searchTerm);
+    document.getElementById("response").innerHTML = "";
+    document.getElementById("about-medicine-name").innerHTML = id;
+    var loading = document.getElementById("loading-animation");
+    loading.style.display = "block";
+    viewAboutPage();
+}
+function viewSearchInfo(searchTerm, id, med){
     returnDrugNames(searchTerm);
     document.getElementById("response").innerHTML = "";
     var loading = document.getElementById("loading-animation");
@@ -160,6 +175,7 @@ function returnDrugNames(searchTerm){
                 var code = section[0].children[1];
                 var displayName = code.attributes.getNamedItem("displayName");
 
+
                 if(displayName.value.indexOf("INDICATIONS & USAGE SECTION") > -1){
                     var text = section[0].getElementsByTagName("text")[0];
                     output += "<h2>Usage</h2>";
@@ -171,6 +187,7 @@ function returnDrugNames(searchTerm){
                     output += new XMLSerializer().serializeToString(text);
                 }
             }
+            //output loading animation
             document.getElementById("response").innerHTML = output;
             var loading = document.getElementById("loading-animation");
             loading.style.display = "none";
@@ -209,14 +226,7 @@ function Animate(slider) {
         slider.classList.remove('deactive');
         slider.classList.add('active');
     }
-    /*
-      if(slider.style.left === '0px')
-      {
-        slider.classList.add('active');
-      } else {
-        slider.classList.remove('active');
-      }
-      */
+
 }
 
 /* Custom drug search */
@@ -233,7 +243,9 @@ function searchDrug(e){
         if(xmlObj.readyState == 4 && xmlObj.status == 200){
             var response = JSON.parse(xmlObj.response);
             if(response.data.length > 0){
-                viewInfo(response.data[0].setid);
+                viewSearchInfo(response.data[0].setid);
+                document.getElementById("about-medicine-name").innerHTML = drugName;
+
             } else {
               document.getElementById("response").innerHTML = "No results found.";
             }
