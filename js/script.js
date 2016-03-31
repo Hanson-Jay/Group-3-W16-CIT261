@@ -16,10 +16,10 @@ function init() {
         meds[i]["active"] = false;
       }
     }
-    // Update last login
-    localStorage["lastLogin"] = new Date().getDate();
     printTable();
   }
+  // Update last login
+  localStorage["lastLogin"] = new Date().getDate();
   document.getElementById('searchBar').addEventListener("keypress", searchDrug);
 }
 
@@ -224,8 +224,10 @@ function Animate(slider) {
 
 /* Custom drug search */
 function searchDrug(e){
-  if (e.type === "keypress" && e.keyCode != 13) {
-    return;
+  if (typeof e != "undefined") {
+    if (e.type === "keypress" && e.keyCode != 13) {
+      return;
+    }
   }
     var drugName = document.getElementById("searchBar").value;
     var xmlObj = new XMLHttpRequest();
