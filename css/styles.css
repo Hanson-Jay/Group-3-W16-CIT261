@@ -111,8 +111,9 @@ article {
 .container {
     width: 75px;
     height: 15px;
-    background: linear-gradient(to right, green , red);
+    background: linear-gradient(to right, #1d305f , #b7cfec);
     border: 2px solid #76a1d6;
+    margin: -7px 25px;
     position: absolute;
     z-index: 1;
 }
@@ -188,6 +189,27 @@ article {
     display: none;
     position: absolute;
     top: 45px; 
+}
+
+#search-button {
+    height: 22px;
+    vertical-align: top;
+    background-color: #76a1d6;
+    /* Medium Blue */
+    border: 2px solid #76a1d6;
+    /* Medium Blue */
+    color: #1d305f;
+    /* Dark Blue */
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    -webkit-transition-duration: 0.4s;
+    /* Safari */
+    transition-duration: 0.5s; 
+}
+
+#searchButton:hover {
+    background-color: #b7cfec; /* Light Blue */
 }
 
 /************************************************************
