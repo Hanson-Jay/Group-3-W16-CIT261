@@ -11,6 +11,7 @@ function init() {
     meds = JSON.parse(localStorage["meds"]);
     printTable();
   }
+  document.getElementById('searchBar').addEventListener("keypress", searchDrug);
 }
 
 // Creates a table for the input medication page as well as the log page
@@ -24,8 +25,14 @@ function printTable() {
   table1 = '<table><th class="medList">Medication</th><th class="medList">Dose</th>';
   for (i = 0; i < meds.length; i++) {
     table1 += "<tr><td>" + meds[i]["med"] + "</td>";
-    table1 += "<td>" + meds[i]["dose"] + "mg</td><td>";
-    table1 += "<td>" + toggle + "</td></tr>";
+    table1 += "<td>" + meds[i]["dose"] + "mg</td>";
+    table1 += "<td class='padding'>" + toggle + "</td>";
+    if(meds[i]["id"] !== undefined){
+          var id = meds[i]["id"]+"";
+          table1 += '<td class="pointer" onClick="viewInfo(\'' + id + '\')"> <div class="medbtns">i</div></td></tr>';
+      } else {
+          table1 += "</tr>";
+      }
   }
   table1 += "</table>";
   document.getElementById("1").innerHTML = table1;
@@ -33,15 +40,9 @@ function printTable() {
   // Build table2 for the Input medication page with delete button
   table2 = "<table><th>Medication</th><th>Dose</th>";
   for (i = 0; i < meds.length; i++) {
-      table2 += "<tr><td value='meds[i]['med']'>" + meds[i]["med"] + "</td>";
-      table2 += "<td>" + meds[i]["dose"] + "mg</td><td>";
-      table2 += "<td onClick='deleteMed(this)'>" + button + "</td>";
-      if(meds[i]["id"] !== undefined){
-          var id = meds[i]["id"]+"";
-          table2 += '<td class="pointer" onClick="viewInfo(\'' + id + '\')"> view info</td></tr>';
-      } else {
-          table2 += "</tr>";
-      }
+      table2 += "<tr><td>" + meds[i]["med"] + "</td>";
+      table2 += "<td>" + meds[i]["dose"] + "mg</td>";
+      table2 += "<td class='pointer' onClick='deleteMed(this)'><div class='medbtns'>x</div></td></tr>";
     }
 //, ' + med + '
     table2 += "</table>";
@@ -86,7 +87,6 @@ function viewAboutPage() {
 }
 
 /* Clear Local Storage reset counter */
-
 function clearLS() {
     localStorage.clear();
     document.getElementById("1").innerHTML = "You have no Medication Listed";
@@ -94,7 +94,6 @@ function clearLS() {
     document.getElementById("saves").innerHTML = "0 Medication(s) saved.";
 }
 /* Creates a medicine object and stores it in the array and updates localStorage */
-
 function store() {
     var loadIt = "";
     var med = document.getElementById("med");
@@ -147,7 +146,6 @@ function viewInfo(searchTerm){
     loading.style.display = "block";
     viewAboutPage();
 }
-
 function returnDrugNames(searchTerm){
     var xmlObj = new XMLHttpRequest();
     var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/"+searchTerm+".xml";
@@ -161,8 +159,6 @@ function returnDrugNames(searchTerm){
                 var section = components[i].children;
                 var code = section[0].children[1];
                 var displayName = code.attributes.getNamedItem("displayName");
-
-
 
                 if(displayName.value.indexOf("INDICATIONS & USAGE SECTION") > -1){
                     var text = section[0].getElementsByTagName("text")[0];
@@ -182,7 +178,6 @@ function returnDrugNames(searchTerm){
     }
     xmlObj.send();
 }
-
 function loadFromLs(){
     if (typeof(Storage) !== "undefined") {
         if (localStorage.clickcount) {
@@ -224,6 +219,28 @@ function Animate(slider) {
       */
 }
 
+/* Custom drug search */
+function searchDrug(e){
+  if (e.type === "keypress" && e.keyCode != 13) {
+    return;
+  }
+    var drugName = document.getElementById("searchBar").value;
+    var xmlObj = new XMLHttpRequest();
+    var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name="+drugName+"&name_type=both";
+    document.getElementById("response").innerHTML = "";
+    xmlObj.open("GET", url, true);
+    xmlObj.onreadystatechange = function(){
+        if(xmlObj.readyState == 4 && xmlObj.status == 200){
+            var response = JSON.parse(xmlObj.response);
+            if(response.data.length > 0){
+                viewInfo(response.data[0].setid);
+            } else {
+              document.getElementById("response").innerHTML = "No results found.";
+            }
+        }
+    }
+    xmlObj.send();
+}
 
 /* Run initialization code */
 init();
