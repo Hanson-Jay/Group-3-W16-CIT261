@@ -33,7 +33,7 @@ function printTable() {
   // Build table2 for the Input medication page with delete button
   table2 = "<table><th>Medication</th><th>Dose</th>";
   for (i = 0; i < meds.length; i++) {
-      table2 += "<tr><td>" + meds[i]["med"] + "</td>";
+      table2 += "<tr><td value='meds[i]['med']'>" + meds[i]["med"] + "</td>";
       table2 += "<td>" + meds[i]["dose"] + "mg</td><td>";
       table2 += "<td onClick='deleteMed(this)'>" + button + "</td>";
       if(meds[i]["id"] !== undefined){
@@ -43,6 +43,7 @@ function printTable() {
           table2 += "</tr>";
       }
     }
+//, ' + med + '
     table2 += "</table>";
     document.getElementById("2").innerHTML = table2;
 
@@ -85,6 +86,7 @@ function viewAboutPage() {
 }
 
 /* Clear Local Storage reset counter */
+
 function clearLS() {
     localStorage.clear();
     document.getElementById("1").innerHTML = "You have no Medication Listed";
@@ -92,15 +94,22 @@ function clearLS() {
     document.getElementById("saves").innerHTML = "0 Medication(s) saved.";
 }
 /* Creates a medicine object and stores it in the array and updates localStorage */
+
 function store() {
+    var loadIt = "";
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
 
     if (typeof(Storage) == "undefined") {
         document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
     }
-
+    document.getElementById("inputPage").innerHTML = "";
+    var loading = document.getElementById("loading-animation");
+    loading.style.display = "none";
   searchForDrug(med.value, mg.value);
+    document.getElementById("inputPage").innerHTML = loadIt;
+    var loading = document.getElementById("loading-animation");
+    loading.style.display = "block";
   document.getElementById('medInput').reset();
 }
 
@@ -138,6 +147,7 @@ function viewInfo(searchTerm){
     loading.style.display = "block";
     viewAboutPage();
 }
+
 function returnDrugNames(searchTerm){
     var xmlObj = new XMLHttpRequest();
     var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls/"+searchTerm+".xml";
@@ -151,6 +161,8 @@ function returnDrugNames(searchTerm){
                 var section = components[i].children;
                 var code = section[0].children[1];
                 var displayName = code.attributes.getNamedItem("displayName");
+
+
 
                 if(displayName.value.indexOf("INDICATIONS & USAGE SECTION") > -1){
                     var text = section[0].getElementsByTagName("text")[0];
@@ -170,6 +182,7 @@ function returnDrugNames(searchTerm){
     }
     xmlObj.send();
 }
+
 function loadFromLs(){
     if (typeof(Storage) !== "undefined") {
         if (localStorage.clickcount) {

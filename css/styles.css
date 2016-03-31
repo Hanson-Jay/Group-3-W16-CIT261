@@ -183,7 +183,7 @@ article {
 /************************************************************
   GENERAL FORMATTING
 ************************************************************/
-
+/*id = # //// class = . */
 h1 {
     color: #1d305f;
 }
@@ -192,7 +192,42 @@ h1 {
     cursor: pointer;
 }
 
+/*#loading-animation {*/
+    /*display: none;*/
+    /*position: absolute;*/
+/*}*/
 #loading-animation {
+    width: 40px;
+    height: 40px;
+    margin: 100px auto;
+    background-color: #333;
     display: none;
     position: absolute;
+    border-radius: 100%;
+    -webkit-animation: scaleout 1.0s infinite ease-in-out;
+    animation: scaleout 1.0s infinite ease-in-out;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+}
+
+@-webkit-keyframes scaleout {
+    0% { -webkit-transform: scale(0) }
+    100% {
+        -webkit-transform: scale(1.0);
+        opacity: 0;
+    }
+}
+
+@keyframes scaleout {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    } 100% {
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+          opacity: 0;
+      }
 }
