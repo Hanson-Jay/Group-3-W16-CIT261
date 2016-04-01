@@ -273,8 +273,18 @@ function searchDrug(e){
     }
   }
     var drugName = document.getElementById("searchBar").value;
+    var searchBtn = document.getElementById("searchBtn");
     var xmlObj = new XMLHttpRequest();
     var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name="+drugName+"&name_type=both";
+  
+    // Form Validation
+      if (drugName == "") {
+        searchBtn.className = "contentButton";
+        // reflow element so animation will run again after adding back class
+        searchBtn.offsetWidth = searchBtn.offsetWidth;
+        searchBtn.className = "contentButton formError";
+        return;
+      }
     document.getElementById("response").innerHTML = "";
     xmlObj.open("GET", url, true),
     loading = document.getElementById("loading-animation");

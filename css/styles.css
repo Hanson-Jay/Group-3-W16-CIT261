@@ -108,21 +108,6 @@ article {
   outline: none;
 }
 
-.formError:after {
-  content: "Both Fields Required";
-  display: block;
-  position: absolute;
-  top: -25px;
-  left: -75px;
-  width: 200px;
-  color: red;
-  opacity: 0;
-  -webkit-animation-name: appear; /* Chrome, Safari, Opera */
-  -webkit-animation-duration: 3s; /* Chrome, Safari, Opera */
-  animation-name: appear;
-  animation-duration: 3s;
-}
-
 /************************************************************
   LOG PAGE
 ************************************************************/
@@ -214,6 +199,11 @@ article {
     /*top: 45px; */
 /*}*/
 
+/* Needed for error message to show properly */
+#searchBtn {
+  position: relative;
+  outline: none;
+}
 
 
 /************************************************************
@@ -286,6 +276,29 @@ h1 {
     left: 0;
     right: 0;
 
+}
+
+/* Error messages if textboxes are blank */
+#save.formError:after {
+  content: "Both Fields Required";
+}
+
+#searchBtn.formError:after {
+  content: "Enter a medication";
+}
+
+.formError:after {
+  display: block;
+  position: absolute;
+  top: -20px;
+  left: -75px;
+  width: 200px;
+  color: red;
+  opacity: 0;
+  -webkit-animation-name: appear; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 3s; /* Chrome, Safari, Opera */
+  animation-name: appear;
+  animation-duration: 3s;
 }
 
 @-webkit-keyframes scaleout {
