@@ -24,10 +24,10 @@
         <h1>Medication Input</h1>
         <h2>Daily Medications</h2>
         <!--Med/Dosage input-->
-        <form id="medInput">
+        <form id="medInput" action="javascript:store();">
         <input type="text" id="med" placeholder="Med" />
         <input type="text" id="mg" placeholder="*mg" />
-        <button type="button" id="save" onclick="store()" class="contentButton">save</button>
+        <button type="button"  id="save" onclick="store()" class="contentButton">save</button>
         <button id="clear" onClick="clearLS()" class="contentButton">clear</button>
         <button type="reset" id="resetBtn" class="contentButton">reset</button>
         <br></form>
