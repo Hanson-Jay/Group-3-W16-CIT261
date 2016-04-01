@@ -241,6 +241,10 @@ h1 {
     margin-left: 25px;
 }
 
+.smpadding {
+    padding-right: 25px;
+}
+
 .padding {
     padding-right: 105px;
 }

@@ -31,22 +31,23 @@ function printTable() {
       button = '<button type="button">Delete</button>',
       i;
   // Build table1 for the log page with toggles
-  table1 = '<table><th class="medList">Medication</th><th class="medList">Dose</th>';
+  table1 = '<table><th class="smpadding">View Info</th><th class="medList smpadding">Medication</th><th class="medList">Dose</th><th>Taken</th>';
   for (i = 0; i < meds.length; i++) {
-    table1 += "<tr><td>" + meds[i]["med"] + "</td>";
+    if(meds[i]["id"] !== undefined){
+          var id = meds[i]["id"]+"";
+          var med = meds[i]["med"]+"";
+          table1 += '<tr><td class="pointer" onClick="viewInfo(\'' + id + '\',  \'' + med + '\')"> <div class="medbtns">i</div></td>';
+      } else {
+          table1 += "<tr>";
+      }
+    table1 += "<td>" + meds[i]["med"] + "</td>";
     table1 += "<td>" + meds[i]["dose"] + "mg</td>";
     table1 += "<td class='padding'>" + '<div class="container"><div class="slider';
     if (meds[i]["active"]) {
       table1 += ' active';
     }
-    table1 += '" class="active" onclick="Animate(this)"></div></div>' + "</td>";
-    if(meds[i]["id"] !== undefined){
-          var id = meds[i]["id"]+"";
-          var med = meds[i]["med"]+"";
-          table1 += '<td class="pointer" onClick="viewInfo(\'' + id + '\',  \'' + med + '\')"> <div class="medbtns">i</div></td></tr>';
-      } else {
-          table1 += "</tr>";
-      }
+    table1 += '" class="active" onclick="Animate(this)"></div></div>' + "</td></tr>";
+
   }
   table1 += "</table>";
   document.getElementById("1").innerHTML = table1;
