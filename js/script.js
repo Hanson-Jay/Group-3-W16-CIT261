@@ -126,7 +126,15 @@ function clearLS() {
 function store() {
     var med = document.getElementById("med");
     var mg = document.getElementById("mg");
-
+    var saveBtn = document.getElementById('save');
+    // Form Validation
+    if (med.value == "" || mg.value == "") {
+      saveBtn.className = "contentButton";
+      // reflow element so animation will run again after adding back class
+      saveBtn.offsetWidth = saveBtn.offsetWidth;
+      saveBtn.className = "contentButton formError";
+      return;
+    }
     if (typeof(Storage) == "undefined") {
         document.getElementById("saves").innerHTML = "Sorry, your browser does not support web storage...";
     }

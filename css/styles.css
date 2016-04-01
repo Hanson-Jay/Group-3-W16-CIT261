@@ -103,6 +103,26 @@ article {
     left: -100%;
 }
 
+#save {
+  position: relative;
+  outline: none;
+}
+
+.formError:after {
+  content: "Both Fields Required";
+  display: block;
+  position: absolute;
+  top: -25px;
+  left: -75px;
+  width: 200px;
+  color: red;
+  opacity: 0;
+  -webkit-animation-name: appear; /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 3s; /* Chrome, Safari, Opera */
+  animation-name: appear;
+  animation-duration: 3s;
+}
+
 /************************************************************
   LOG PAGE
 ************************************************************/
@@ -141,7 +161,7 @@ article {
     */
     border: 1px solid #76a1d6;
     left:22px;
-    -webkit-animation-name: example; /* Chrome, Safari, Opera */
+    -webkit-animation-name: slide; /* Chrome, Safari, Opera */
     -webkit-animation-duration: .8s; /* Chrome, Safari, Opera */
     animation-name: slide;
     animation-duration: .8s;
@@ -282,5 +302,12 @@ h1 {
         transform: scale(1.0);
         opacity: 0;
     }
+}
+
+@keyframes appear {
+  0%   {opacity: 0;}
+  25%  {opacity: 1;}
+  75%  {opacity: 1;}
+  100% {opacity: 0;}
 }
 
