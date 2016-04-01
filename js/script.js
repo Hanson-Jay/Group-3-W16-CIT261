@@ -295,5 +295,10 @@ function searchDrug(e){
     xmlObj.send();
 }
 
+function saveMed() {
+    if (event.keyCode === 13)
+        document.getElementById('save').click();
+}
+
 /* Run initialization code */
 init();

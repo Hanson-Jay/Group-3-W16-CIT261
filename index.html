@@ -26,10 +26,8 @@
         <!--Med/Dosage input-->
        
         <form id="medInput">
-            <input type="text" id="med" placeholder="Med" onkeydown="if (event.keyCode == 13)
-                                                                          document.getElementById('save').click()"/>
-            <input type="number" id="mg" placeholder="*mg" onkeydown="if (event.keyCode == 13)
-                                                                          document.getElementById('save').click()"/>
+            <input type="text" id="med" placeholder="Med" onkeydown="saveMed()"/>
+            <input type="number" id="mg" placeholder="*mg" onkeydown="saveMed()"/>
             <button type="button" id="save" onclick="store()" class="contentButton">save</button>
             <button type="reset" id="resetBtn" class="contentButton">reset</button>
             <button type="button" id="clear" onClick="clearLS()" class="contentButton">clear</button>
