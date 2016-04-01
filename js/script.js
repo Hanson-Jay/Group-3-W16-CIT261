@@ -98,9 +98,25 @@ function viewAboutPage() {
     navButtons[2].className = "selected";
     selectedNavBtn = navButtons[2];
 }
+/*Experimenting with a confirm box...for clearing local storage
+ function clearLS() {
+     var x;
+ if(confirm("Are you sure you want to clear your medications?") == true) {
+ localStorage.clear();
+ document.getElementById("1").innerHTML = "You have no Medication Listed";
+ document.getElementById("2").innerHTML = "You have no Medication Listed";
+ document.getElementById("saves").innerHTML = "0 Medication(s) saved.";
+ } else {
+
+    x = "That was close!";
+ }
+ document.getElementById("response").innerHTML = x;
+ }
+*/
 
 /* Clear Local Storage reset counter */
 function clearLS() {
+
     localStorage.clear();
     document.getElementById("1").innerHTML = "You have no Medication Listed";
     document.getElementById("2").innerHTML = "You have no Medication Listed";
