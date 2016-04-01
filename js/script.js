@@ -251,7 +251,9 @@ function searchDrug(e){
     var xmlObj = new XMLHttpRequest();
     var url = "https://dailymed.nlm.nih.gov/dailymed/services/v2/spls.json?drug_name="+drugName+"&name_type=both";
     document.getElementById("response").innerHTML = "";
-    xmlObj.open("GET", url, true);
+    xmlObj.open("GET", url, true),
+    loading = document.getElementById("loading-animation");
+    loading.style.display = "block";
     xmlObj.onreadystatechange = function(){
         if(xmlObj.readyState == 4 && xmlObj.status == 200){
             var response = JSON.parse(xmlObj.response);
@@ -261,6 +263,7 @@ function searchDrug(e){
 
             } else {
               document.getElementById("response").innerHTML = "No results found.";
+              loading.style.display = "none";
             }
         }
     }
