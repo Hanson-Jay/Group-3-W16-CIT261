@@ -15,7 +15,11 @@ body {
 body {
     margin: 0 auto;
     padding: 0 8px;
-    max-width: 1000px;
+
+}
+
+#center {
+    max-width: 1500px;
 }
 
 button {
@@ -119,7 +123,7 @@ article {
 .container {
     width: 75px;
     height: 15px;
-    background: linear-gradient(to right, #1d305f , #b7cfec);
+    background: linear-gradient(to right, #cb693e , #b7cfec);
     border: 2px solid #76a1d6;
     margin: -7px 25px;
     position: absolute;
