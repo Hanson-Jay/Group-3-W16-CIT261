@@ -31,7 +31,7 @@ function printTable() {
       button = '<button type="button">Delete</button>',
       i;
   // Build table1 for the log page with toggles
-  table1 = '<table><th class="smpadding">View Info</th><th class="medList smpadding">Medication</th><th class="medList">Dose</th><th>Taken</th>';
+  table1 = '<table><th>View Info</th><th class="medList smpadding">Medication</th><th class="medList">Dose</th><th>Taken</th>';
   for (i = 0; i < meds.length; i++) {
     if(meds[i]["id"] !== undefined){
           var id = meds[i]["id"]+"";
@@ -76,25 +76,25 @@ function deleteMed(obj){
 function viewInputPage() {
     selectedNavBtn.className = "";
     inputPage.style.left = "0px";
-    logPage.style.left = "100%";
-    aboutPage.style.left = "100%";
+    logPage.style.left = "110%";
+    aboutPage.style.left = "110%";
     navButtons[0].className = "selected";
     selectedNavBtn = navButtons[0];
 }
 
 function viewLogPage() {
     selectedNavBtn.className = "";
-    inputPage.style.left = "-100%";
+    inputPage.style.left = "-110%";
     logPage.style.left = "0px";
-    aboutPage.style.left = "100%";
+    aboutPage.style.left = "110%";
     navButtons[1].className = "selected";
     selectedNavBtn = navButtons[1];
 }
 
 function viewAboutPage() {
     selectedNavBtn.className = "";
-    inputPage.style.left = "-100%";
-    logPage.style.left = "-100%";
+    inputPage.style.left = "-110%";
+    logPage.style.left = "-110%";
     aboutPage.style.left = "0px";
     navButtons[2].className = "selected";
     selectedNavBtn = navButtons[2];
@@ -122,6 +122,7 @@ function clearLS() {
     document.getElementById("1").innerHTML = "You have no Medication Listed";
     document.getElementById("2").innerHTML = "You have no Medication Listed";
     document.getElementById("saves").innerHTML = "0 Medication(s) saved.";
+    meds = [];
 }
 /* Creates a medicine object and stores it in the array and updates localStorage */
 function store() {
