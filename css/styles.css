@@ -13,14 +13,9 @@ body {
 }
 
 body {
-    margin: 0 auto;
     padding: 0 8px;
-
 }
 
-#center {
-    max-width: 1500px;
-}
 
 button {
   cursor: pointer;
